@@ -67,8 +67,8 @@ const loginStack = createStackNavigator({
 
 const AuthNavigator = createSwitchNavigator(
   {
-    LoadingScreen: {screen: loginStack},
-    Login: {screen: Login},
+    LoadingScreen: {screen: LoadingScreen},
+    Login: {screen: loginStack},
     App: {screen: tabNavigator},
   },
   {
