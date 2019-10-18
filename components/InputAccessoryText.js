@@ -9,8 +9,8 @@ const styles = {
   },
 }
 
-function CustomSwitch(props) {
+function InputAccessoryText(props) {
   return <Text style={styles.text}>{props.children}:</Text>;
 }
 
-export default CustomSwitch;
+export default InputAccessoryText;

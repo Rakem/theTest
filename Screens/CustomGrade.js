@@ -7,6 +7,8 @@ import CustomSwitch from '../components/CustomSwitch';
 import {useMutation} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {GRADES_QUERY} from '../Queries';
+import {PRIMARY_COLOR} from '../Constants';
+import GradeDetail from './GradeDetail';
 
 const CREATE_GRADE_MUTATION = gql`
   mutation createGrade(
@@ -101,7 +103,7 @@ function NewGrade({navigation}) {
           multiline
         />
 
-        <Button title={'Submit'} onPress={onSubmit} enabled={!loading}/>
+        <Button color={PRIMARY_COLOR.main} title={'Submit'} onPress={onSubmit} enabled={!loading}/>
       </View>
     </>
   );
@@ -109,4 +111,7 @@ function NewGrade({navigation}) {
 
 NewGrade.propTypes = {};
 
+NewGrade.navigationOptions = ({navigation}) => ({
+  title:'Add Custom Grade',
+});
 export default NewGrade;

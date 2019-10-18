@@ -1,14 +1,14 @@
 import {Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {ACCENT_COLOR} from '../Constants';
+import {ACCENT_COLOR, PRIMARY_COLOR} from '../Constants';
 import InputAccessoryText from './InputAccessoryText';
 
 const styles = {
   dateSelect: {
     borderBottomWidth: 1,
     margin: 3,
-    borderColor: ACCENT_COLOR,
+    borderColor: PRIMARY_COLOR.light,
     height: 49,
   },
   text: {

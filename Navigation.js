@@ -24,10 +24,16 @@ const headerLeftDefaultOptions = ({navigation}) => ({
   },
   headerTintColor: TEXT_COLOR,
 });
+const headerColorOptions =  ({navigation}) => ({
+  headerStyle: {
+    backgroundColor: PRIMARY_COLOR.main,
+  },
+  headerTintColor: TEXT_COLOR,
+});
 const gradesStack = createStackNavigator({
   Grades: {screen: Grades, navigationOptions: headerLeftDefaultOptions},
-  NewGrade: {screen: NewGrade},
-  GradeDetail: {screen: GradeDetail},
+  NewGrade: {screen: NewGrade, navigationOptions: headerColorOptions},
+  GradeDetail: {screen: GradeDetail, navigationOptions: headerColorOptions},
 });
 
 const statisticsStack = createStackNavigator(
@@ -39,14 +45,29 @@ const statisticsStack = createStackNavigator(
   },
 );
 
-const tabNavigator = createBottomTabNavigator({
-  Grades: {screen: gradesStack},
-  Statistics: {screen: statisticsStack},
-});
+const tabNavigator = createBottomTabNavigator(
+  {
+    Grades: {screen: gradesStack},
+    Statistics: {screen: statisticsStack},
+  },
+  {
+    tabBarOptions: {
+      showIcon: false,
+      activeTintColor: TEXT_COLOR,
+      inactiveTintColor: TEXT_COLOR,
+      activeBackgroundColor: PRIMARY_COLOR.dark,
+      inactiveBackgroundColor: PRIMARY_COLOR.light,
+    },
+  },
+);
+
+const loginStack = createStackNavigator({
+  Login:{screen:Login,navigationOptions: headerColorOptions}
+})
 
 const AuthNavigator = createSwitchNavigator(
   {
-    LoadingScreen: {screen: LoadingScreen},
+    LoadingScreen: {screen: loginStack},
     Login: {screen: Login},
     App: {screen: tabNavigator},
   },

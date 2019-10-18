@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {clearData} from '../server/server';
+import NewGrade from './CustomGrade';
 
 const LOGIN_MUTATION = gql`
   mutation doLogin($userName: String!, $password: String!) {
@@ -14,6 +15,10 @@ const LOGIN_MUTATION = gql`
   }
 `;
 const TOKEN_STORAGE_KEY = '@TOKEN_STORAGE_KEY';
+
+const styles={
+
+}
 
 const Login = ({navigation}) => {
   const [doLogin, {loading}] = useMutation(LOGIN_MUTATION);
@@ -57,5 +62,10 @@ Login.logOut = async function() {
 };
 
 Login.propTypes = {};
+
+
+Login.navigationOptions = ({navigation}) => ({
+  title:'Login',
+});
 
 export default Login;

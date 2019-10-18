@@ -6,6 +6,7 @@ import {BarChart, Grid, YAxis, XAxis} from 'react-native-svg-charts';
 import {View, Text} from 'react-native';
 import SingleNumberVis from '../components/SingleNumberVis';
 import {PRIMARY_COLOR, TEXT_COLOR} from '../Constants';
+import GradeDetail from './GradeDetail';
 
 const styles = {
   chartContainer: {
@@ -17,12 +18,15 @@ const styles = {
   },
   infoContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    flex:0.3,
   },
   barChart: {flex: 1},
   xAxis: {marginTop: 10},
   numberVis: {
-    flex: 1,
-  },
+    flex:0.49,
+  }
 };
 
 const Statistics = props => {
@@ -55,6 +59,7 @@ const Statistics = props => {
 
   const maxValue = bins.reduce((maxValue, bin) => Math.max(maxValue, bin), 0);
 
+  //I fought hard with this chart, but it won in the end, couldn't get the axix labels to diplay correctly
   return (
     <>
       <View style={styles.chartContainer}>

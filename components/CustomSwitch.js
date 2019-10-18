@@ -1,6 +1,6 @@
 import {Text, Switch} from 'react-native';
 import React from 'react';
-import {ACCENT_COLOR} from '../Constants';
+import {ACCENT_COLOR, PRIMARY_COLOR} from '../Constants';
 import InputAccessoryText from './InputAccessoryText';
 function CustomSwitch(props) {
   return (
