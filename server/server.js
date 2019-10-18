@@ -9,7 +9,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 const DATA_KEY = '@DATA_KEY';
 
 export function clearData(){
-  AsyncStorage.removeItem(DATA_KEY);
+  console.log('data reset');
+  return AsyncStorage.setItem(DATA_KEY, JSON.stringify(DATA.grades));
 }
 function createMockServerSchema() {
   const schemaString = SCHEMA;
@@ -32,6 +33,7 @@ function createMockServerSchema() {
 
   const resolverMap = {
     Query: {
+      //delay to actually see the loadingIndicator
       getGrades: delay(() => {
         console.log('data fetched');
         return AsyncStorage.getItem(DATA_KEY).then(data =>
@@ -52,6 +54,8 @@ function createMockServerSchema() {
         AsyncStorage.getItem(DATA_KEY).then(data => {
           const parsedData = JSON.parse(data);
           grade.id = uuid.v4();
+          console.log(parsedData);
+          console.log(grade);
           return AsyncStorage.setItem(
             DATA_KEY,
             JSON.stringify([...parsedData, grade]),

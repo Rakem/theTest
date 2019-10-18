@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
-import {Text, Button, View, TextInput, TouchableOpacity} from 'react-native';
+import { Button, View, ActivityIndicator} from 'react-native';
 import CustomTextInput from '../components/CustomTextInput';
 import CustomDatePicker from '../components/CustomDatePicker';
 import CustomSwitch from '../components/CustomSwitch';
 import {useMutation} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {GRADES_QUERY} from '../Queries';
-import {PRIMARY_COLOR} from '../Constants';
-import GradeDetail from './GradeDetail';
+import {NEUTRAL_BACKGROUND_COLOR, PRIMARY_COLOR} from '../Constants';
 
 const CREATE_GRADE_MUTATION = gql`
   mutation createGrade(
@@ -52,12 +50,25 @@ function NewGrade({navigation}) {
   const [note, setNote] = useState('');
   const [date, setDate] = useState(new Date());
 
-  const [doSubmit, {loading}] = useMutation(CREATE_GRADE_MUTATION,{
+  const [doSubmit, {loading}] = useMutation(CREATE_GRADE_MUTATION, {
     refetchQueries: [{query: GRADES_QUERY}],
     awaitRefetchQueries: true,
   });
 
+  function convertFloat(value) {
+    return parseFloat(value.replace(',', '.'));
+  }
+
+  //needs better validation and a message for the user
+  const floatGrade = convertFloat(grade);
+  const isValidGrade = floatGrade <= 6 && floatGrade >= 1;
+  const submitEnabled =
+    !loading && name !== '' && grade !== '' && credits !== '' && isValidGrade;
+
   function onSubmit() {
+    if (!submitEnabled) {
+      return;
+    }
     doSubmit({
       variables: {
         name: name,
@@ -70,7 +81,7 @@ function NewGrade({navigation}) {
       },
     }).then(({data}) => {
       if (data) {
-        navigation.navigate('Grades')
+        navigation.navigate('Grades');
       }
     });
   }
@@ -78,16 +89,19 @@ function NewGrade({navigation}) {
   return (
     <>
       <View style={styles.container}>
+        <CustomTextInput title="Name" value={name} onChangeText={setName} />
         <CustomTextInput
-          title="Name"
-          value={name}
-          onChangeText={setName}
+          title="Grade"
+          value={grade}
+          onChangeText={setGrade}
+          keyboardType="decimal-pad"
+          er
         />
-        <CustomTextInput title="Grade" value={grade} onChangeText={setGrade} />
         <CustomTextInput
           title="Credits"
           value={credits}
           onChangeText={setCredits}
+          keyboardType="decimal-pad"
         />
         <CustomTextInput
           title="semester"
@@ -103,15 +117,21 @@ function NewGrade({navigation}) {
           multiline
         />
 
-        <Button color={PRIMARY_COLOR.main} title={'Submit'} onPress={onSubmit} enabled={!loading}/>
+        <Button
+          color={submitEnabled ? PRIMARY_COLOR.main : NEUTRAL_BACKGROUND_COLOR}
+          title={'Submit'}
+          onPress={onSubmit}
+          enabled={!submitEnabled}
+        />
+        {loading && <ActivityIndicator />}
       </View>
     </>
   );
-};
+}
 
 NewGrade.propTypes = {};
 
 NewGrade.navigationOptions = ({navigation}) => ({
-  title:'Add Custom Grade',
+  title: 'Add Custom Grade',
 });
 export default NewGrade;

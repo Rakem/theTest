@@ -62,7 +62,7 @@ const tabNavigator = createBottomTabNavigator(
 );
 
 const loginStack = createStackNavigator({
-  Login:{screen:Login,navigationOptions: headerColorOptions}
+  LoginScreen:{screen:Login,navigationOptions: headerColorOptions}
 })
 
 const AuthNavigator = createSwitchNavigator(
