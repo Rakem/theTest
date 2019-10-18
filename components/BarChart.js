@@ -1,5 +1,6 @@
 import {Text, View, Animated} from 'react-native';
 import React, {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
 import {TEXT_COLOR} from '../Constants';
 const styles = {
   chartContainer: {
@@ -52,4 +53,8 @@ function Bar({value, label}) {
     </View>
   );
 }
+
+BarChart.propTypes = {
+  data: PropTypes.array,
+};
 export default BarChart;

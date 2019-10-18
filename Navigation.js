@@ -24,7 +24,7 @@ const headerLeftDefaultOptions = ({navigation}) => ({
   },
   headerTintColor: TEXT_COLOR,
 });
-const headerColorOptions =  ({navigation}) => ({
+const headerColorOptions = ({navigation}) => ({
   headerStyle: {
     backgroundColor: PRIMARY_COLOR.main,
   },
@@ -62,8 +62,8 @@ const tabNavigator = createBottomTabNavigator(
 );
 
 const loginStack = createStackNavigator({
-  LoginScreen:{screen:Login,navigationOptions: headerColorOptions}
-})
+  LoginScreen: {screen: Login, navigationOptions: headerColorOptions},
+});
 
 const AuthNavigator = createSwitchNavigator(
   {

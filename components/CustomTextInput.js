@@ -2,6 +2,8 @@ import {Text, TextInput} from 'react-native';
 import React from 'react';
 import {ACCENT_COLOR, PRIMARY_COLOR} from '../Constants';
 import InputAccessoryText from './InputAccessoryText';
+import PropTypes from 'prop-types';
+import CustomSwitch from './CustomSwitch';
 function CustomTextInput(props) {
   return (
     <>
@@ -10,5 +12,7 @@ function CustomTextInput(props) {
     </>
   );
 }
-
+CustomTextInput.propTypes = {
+  title: PropTypes.string,
+};
 export default CustomTextInput;

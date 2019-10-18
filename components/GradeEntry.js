@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Paper from './Paper';
 import {Text, View, ScrollView} from 'react-native';
 import InputAccessoryText from './InputAccessoryText';
 import {

@@ -3,6 +3,8 @@ import React, {useState} from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {ACCENT_COLOR, PRIMARY_COLOR} from '../Constants';
 import InputAccessoryText from './InputAccessoryText';
+import PropTypes from 'prop-types';
+import CustomSwitch from './CustomSwitch';
 
 const styles = {
   dateSelect: {
@@ -45,5 +47,9 @@ function CustomDatePicker({title, date, onDateChanged}) {
     </>
   );
 }
-
+CustomDatePicker.propTypes = {
+  title: PropTypes.string,
+  date: PropTypes.object,
+  onDateChange: PropTypes.func,
+};
 export default CustomDatePicker;
