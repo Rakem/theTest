@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {Button, TextInput} from 'react-native';
+import {Button, TextInput, Text} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
@@ -19,10 +19,11 @@ const Login = ({navigation}) => {
 
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const [storageError, setStorageError] = useState();
+  const [error, setError] = useState();
 
   function onLoginPressed() {
-    setStorageError('');
+    setError(undefined);
+    setError('');
     doLogin({variables: {userName, password}})
       .then(({data}) => {
         return AsyncStorage.setItem(TOKEN_STORAGE_KEY, data.response.token);
@@ -31,12 +32,16 @@ const Login = ({navigation}) => {
         navigation.navigate('App');
       })
       .catch(error => {
-        setStorageError(error);
+        setError(error);
       });
   }
 
   return (
     <>
+      {
+        !!error &&
+          <Text>{error.message}</Text>
+      }
       <TextInput value={userName} onChangeText={setUserName} />
       <TextInput value={password} onChangeText={setPassword} />
       <Button title={'Login'} onPress={onLoginPressed} />
