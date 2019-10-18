@@ -6,15 +6,41 @@ import Login from './Screens/Login';
 import Statistics from './Screens/Statistics';
 import Grades from './Screens/Grades';
 import NewGrade from './Screens/CustomGrade';
+import GradeDetail from './Screens/GradeDetail';
+import {Text, TouchableOpacity, View} from 'react-native';
 
-const gradesStack = createStackNavigator({
-  Statistics: {screen: Grades},
-  NewGrade: {screen: NewGrade},
+const headerLeftDefaultOptions = ({navigation}) => ({
+  headerLeft: (
+    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+      <View style={{paddingLeft: 15}}>
+        <Text>Logout</Text>
+      </View>
+    </TouchableOpacity>
+  ),
 });
+const gradesStack = createStackNavigator(
+  {
+    Statistics: {screen: Grades},
+    NewGrade: {screen: NewGrade},
+    GradeDetail: {screen: GradeDetail},
+  },
+  {
+    defaultNavigationOptions: headerLeftDefaultOptions,
+  },
+);
+
+const statisticsStack = createStackNavigator(
+  {
+    Statistics: {screen: Statistics},
+  },
+  {
+    defaultNavigationOptions: headerLeftDefaultOptions,
+  },
+);
 
 const tabNavigator = createBottomTabNavigator({
   Grades: {screen: gradesStack},
-  Statistics: {screen: Statistics},
+  Statistics: {screen: statisticsStack},
 });
 
 const AuthNavigator = createSwitchNavigator(

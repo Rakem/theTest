@@ -10,20 +10,16 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     margin: 10,
-    borderRadius: 5,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-
+    borderRadius: 1,
+    shadowOffset: {width: 10, height: 10},
+    shadowColor: 'black',
+    shadowOpacity: 1,
     elevation: 3,
   },
 });
 
 function Paper({children, style}) {
-  return(
+  return (
     <View style={[styles.container,style]}>
       {children}
     </View>
