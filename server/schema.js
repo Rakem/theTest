@@ -5,12 +5,13 @@ type Grade {
     id: String
     name: String
     semester: String
-    grade: Float
-    credits: Float
+    grade: String
+    credits: String
     status: String
     note: String
     date: String
 }
+
 
 input GradeInput{
     name: String

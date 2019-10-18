@@ -24,9 +24,25 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import Navigation from './Navigation';
+import {ApolloProvider} from 'react-apollo';
+import {ApolloClient} from 'apollo-client';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import createMockServerSchema from './server/server';
+const cache = new InMemoryCache();
+
+const link = createMockServerSchema();
+
+const client = new ApolloClient({
+  link,
+  cache,
+});
 
 const App: () => React$Node = () => {
-  return <Navigation />;
+  return (
+    <ApolloProvider client={client}>
+      <Navigation />
+    </ApolloProvider>
+  );
 };
 
 export default App;

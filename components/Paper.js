@@ -22,9 +22,8 @@ const styles = StyleSheet.create({
   },
 });
 
-function Paper(children, style) {
-
-  return (
+function Paper({children, style}) {
+  return(
     <View style={[styles.container,style]}>
       {children}
     </View>
