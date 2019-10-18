@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Button, View, ActivityIndicator} from 'react-native';
+import {Button, View, ActivityIndicator} from 'react-native';
 import CustomTextInput from '../components/CustomTextInput';
 import CustomDatePicker from '../components/CustomDatePicker';
 import CustomSwitch from '../components/CustomSwitch';
@@ -89,19 +89,35 @@ function NewGrade({navigation}) {
   return (
     <>
       <View style={styles.container}>
-        <CustomTextInput title="Name" value={name} onChangeText={setName} />
+        <CustomTextInput
+          title="Name"
+          value={name}
+          onChangeText={setName}
+          error={
+            name.length > 2
+              ? ''
+              : 'Please enter a name longer than 2 characters'
+          }
+        />
         <CustomTextInput
           title="Grade"
           value={grade}
           onChangeText={setGrade}
           keyboardType="decimal-pad"
-          er
+          error={
+            isValidGrade ? '' : 'Please enter a valid grade between 1 and 6'
+          }
         />
         <CustomTextInput
           title="Credits"
           value={credits}
           onChangeText={setCredits}
           keyboardType="decimal-pad"
+          error={
+            credits.length > 2
+              ? ''
+              : 'Please enter credits'
+          }
         />
         <CustomTextInput
           title="semester"
