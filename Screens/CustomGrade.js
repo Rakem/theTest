@@ -8,27 +8,27 @@ import {useMutation} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 const CREATE_GRADE_MUTATION = gql`
-    mutation createGrade(
-        $name: String!,
-        $semester: String!,
-        $grade: String!,
-        $credits: String!,
-        $status: String!,
-        $note: String!,
-        $date: String
+  mutation createGrade(
+    $name: String!
+    $semester: String!
+    $grade: String!
+    $credits: String!
+    $status: String!
+    $note: String!
+    $date: String
+  ) {
+    response: createGrade(
+      name: $name
+      semester: $semester
+      grade: $grade
+      credits: $credits
+      status: $status
+      note: $note
+      date: $date
     ) {
-        response: createGrade(
-            name: $name
-            semester: $semester
-            grade: $grade
-            credits: $credits
-            status: $status
-            note: $note
-            date: $note
-        ) {
-            token
-        }
+      grade
     }
+  }
 `;
 
 const styles = {
@@ -38,13 +38,6 @@ const styles = {
   },
 };
 
-// name: String
-// semester: String
-// grade: String
-// credits: String
-// status: String
-// note: String
-// date: String
 const NewGrade = props => {
   const [name, setName] = useState('');
   const [semester, setSemester] = useState('');
@@ -54,7 +47,20 @@ const NewGrade = props => {
   const [note, setNote] = useState('');
   const [date, setDate] = useState(new Date());
 
-  const [doLogin, {loading}] = useMutation(CREATE_GRADE_MUTATION);
+  const [doSubmit, {loading}] = useMutation(CREATE_GRADE_MUTATION);
+
+  function onSubmit(){
+    doSubmit({
+      variables: {
+        name: name,
+        semester: semester,
+        grade: grade,
+        credits: credits,
+        status: status ? 'Bestanden' : 'Nicht Bestanden',
+        note: note,
+        date: note,
+      }});
+  }
 
   return (
     <>
@@ -79,12 +85,11 @@ const NewGrade = props => {
           multiline
         />
 
-        <Button title={'Submit'} />
+        <Button title={'Submit'} onPress={onSubmit} />
       </View>
     </>
   );
 };
-
 
 NewGrade.propTypes = {};
 
