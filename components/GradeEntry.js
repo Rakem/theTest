@@ -9,7 +9,8 @@ import {
   NEUTRAL_BACKGROUND_COLOR,
   PRIMARY_COLOR,
   SUCCESS_COLOR,
-  TEXT_COLOR, TEXT_COLOR_DARK,
+  TEXT_COLOR,
+  TEXT_COLOR_DARK,
 } from '../Constants';
 
 const styles = {
@@ -28,25 +29,25 @@ const styles = {
     alignItems: 'stretch',
   },
   container: {
-    height:60,
+    height: 60,
     margin: 5,
     marginBottom: 0,
     borderRadius: 10,
     flexDirection: 'row',
   },
   secondaryContainer: {
-    flex:1,
+    flex: 1,
     backgroundColor: 'white',
     borderBottomRightRadius: 5,
     borderTopRightRadius: 5,
   },
   passIndicator: {
-    width:20,
+    width: 20,
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
   },
   infoBox: {
-    marginRight:15,
+    marginRight: 15,
     alignItems: 'center',
   },
 };

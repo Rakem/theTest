@@ -21,9 +21,9 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  list:{
-    backgroundColor:NEUTRAL_BACKGROUND_COLOR,
-  }
+  list: {
+    backgroundColor: NEUTRAL_BACKGROUND_COLOR,
+  },
 };
 
 const Grades = ({navigation}) => {

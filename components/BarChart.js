@@ -39,7 +39,7 @@ function BarChart({data}) {
 
   const bars = data.map(entry => {
     const value = maxValue > 0 ? entry.value / maxValue : 0;
-    const scaledValue = Animated.multiply(value,scale);
+    const scaledValue = Animated.multiply(value, scale);
     return <Bar value={scaledValue} key={entry.label} label={entry.label} />;
   });
   return <View style={styles.chartContainer}>{bars}</View>;
