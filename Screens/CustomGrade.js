@@ -101,7 +101,7 @@ function NewGrade({navigation}) {
           multiline
         />
 
-        <Button title={'Submit'} onPress={onSubmit} />
+        <Button title={'Submit'} onPress={onSubmit} enabled={!loading}/>
       </View>
     </>
   );

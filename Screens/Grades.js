@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 import GradeEntry from '../components/GradeEntry';
 import {GRADES_QUERY} from '../Queries';
+import {TEXT_COLOR} from '../Constants';
+import HeaderButton from '../components/HeaderButton';
 
 
 
@@ -56,11 +58,7 @@ const Grades = ({navigation}) => {
 
 Grades.navigationOptions = ({navigation}) => ({
   headerRight: (
-    <TouchableOpacity onPress={() => navigation.navigate('NewGrade')}>
-      <View style={{paddingRight: 15}}>
-        <Text>Add</Text>
-      </View>
-    </TouchableOpacity>
+    <HeaderButton title="Add" onPress={() => navigation.navigate('NewGrade')} />
   ),
 });
 

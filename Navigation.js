@@ -9,25 +9,26 @@ import NewGrade from './Screens/CustomGrade';
 import GradeDetail from './Screens/GradeDetail';
 import LoadingScreen from './Screens/LoadingScreen';
 import {Text, TouchableOpacity, View} from 'react-native';
+import {PRIMARY_COLOR, TEXT_COLOR} from './Constants';
+import HeaderButton from './components/HeaderButton';
 
 const headerLeftDefaultOptions = ({navigation}) => ({
   headerLeft: (
-    <TouchableOpacity onPress={() =>
-      Login.logOut().then(() => navigation.navigate('Login'))
-    }>
-      <View style={{paddingLeft: 15}}>
-        <Text>Logout</Text>
-      </View>
-    </TouchableOpacity>
+    <HeaderButton
+      title="Logout"
+      onPress={() => Login.logOut().then(() => navigation.navigate('Login'))}
+    />
   ),
-});
-const gradesStack = createStackNavigator(
-  {
-    Grades: {screen: Grades, navigationOptions: headerLeftDefaultOptions},
-    NewGrade: {screen: NewGrade},
-    GradeDetail: {screen: GradeDetail},
+  headerStyle: {
+    backgroundColor: PRIMARY_COLOR.main,
   },
-);
+  headerTintColor: TEXT_COLOR,
+});
+const gradesStack = createStackNavigator({
+  Grades: {screen: Grades, navigationOptions: headerLeftDefaultOptions},
+  NewGrade: {screen: NewGrade},
+  GradeDetail: {screen: GradeDetail},
+});
 
 const statisticsStack = createStackNavigator(
   {
