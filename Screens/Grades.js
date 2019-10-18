@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import GradeEntry from '../components/GradeEntry';
 import {GRADES_QUERY} from '../Queries';
-import {TEXT_COLOR} from '../Constants';
+import {NEUTRAL_BACKGROUND_COLOR, TEXT_COLOR} from '../Constants';
 import HeaderButton from '../components/HeaderButton';
 
 const styles = {
@@ -21,6 +21,9 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
+  list:{
+    backgroundColor:NEUTRAL_BACKGROUND_COLOR,
+  }
 };
 
 const Grades = ({navigation}) => {
@@ -40,6 +43,7 @@ const Grades = ({navigation}) => {
   return (
     <>
       <FlatList
+        style={styles.list}
         data={grades}
         keyExtractor={item => item.id}
         renderItem={({item}) => (

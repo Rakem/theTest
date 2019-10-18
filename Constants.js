@@ -1,4 +1,4 @@
-export const ACCENT_COLOR = '#225522';
+
 export const PRIMARY_COLOR = {
   main: '#9565cc',
   light: '#c894ff',
@@ -14,3 +14,4 @@ export const FAIL_COLOR = {
 export const NEUTRAL_BACKGROUND_COLOR='#EEE';
 
 export const TEXT_COLOR='white';
+export const TEXT_COLOR_DARK='#8b95a6';

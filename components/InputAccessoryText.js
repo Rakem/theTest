@@ -1,10 +1,10 @@
 import {Text, Switch} from 'react-native';
 import React from 'react';
-import {ACCENT_COLOR} from '../Constants';
+import {ACCENT_COLOR, TEXT_COLOR_DARK} from '../Constants';
 
 const styles = {
   text: {
-    color: '#8b95a6',
+    color: TEXT_COLOR_DARK,
     fontSize: 11,
   },
 }
