@@ -1,9 +1,16 @@
 import {makeExecutableSchema, addResolveFunctionsToSchema} from 'graphql-tools';
 import SchemaLink from 'apollo-link-schema';
 import gql from 'graphql-tag';
-
+import uuid from 'react-native-uuid';
 import * as DATA from './data';
 import SCHEMA from './schema';
+import AsyncStorage from '@react-native-community/async-storage';
+
+const DATA_KEY = '@DATA_KEY';
+
+export function clearData(){
+  AsyncStorage.removeItem(DATA_KEY);
+}
 function createMockServerSchema() {
   const schemaString = SCHEMA;
   const schema = gql`
@@ -11,15 +18,25 @@ function createMockServerSchema() {
   `;
   const executableSchema = makeExecutableSchema({typeDefs: schema});
 
+  //initial load
+  AsyncStorage.getItem(DATA_KEY).then(data => {
+    if (!data) {
+      AsyncStorage.setItem(DATA_KEY, JSON.stringify(DATA.grades));
+    }
+  });
+
   function delay(resolver) {
-    return () => new Promise(resolve => setTimeout(resolve, 2000)).then(resolver);
+    return () =>
+      new Promise(resolve => setTimeout(resolve, 2000)).then(resolver);
   }
 
   const resolverMap = {
     Query: {
       getGrades: delay(() => {
         console.log('data fetched');
-        return DATA.grades;
+        return AsyncStorage.getItem(DATA_KEY).then(data =>
+          data ? JSON.parse(data) : [],
+        );
       }),
     },
     Mutation: {
@@ -30,6 +47,16 @@ function createMockServerSchema() {
         } else {
           throw new Error('Invalid Credentials');
         }
+      },
+      createGrade: (_, {grade}) => {
+        AsyncStorage.getItem(DATA_KEY).then(data => {
+          const parsedData = JSON.parse(data);
+          grade.id = uuid.v4();
+          return AsyncStorage.setItem(
+            DATA_KEY,
+            JSON.stringify([...parsedData, grade]),
+          );
+        });
       },
     },
   };

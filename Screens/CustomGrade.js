@@ -6,6 +6,7 @@ import CustomDatePicker from '../components/CustomDatePicker';
 import CustomSwitch from '../components/CustomSwitch';
 import {useMutation} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import {GRADES_QUERY} from '../Queries';
 
 const CREATE_GRADE_MUTATION = gql`
   mutation createGrade(
@@ -18,13 +19,15 @@ const CREATE_GRADE_MUTATION = gql`
     $date: String
   ) {
     response: createGrade(
-      name: $name
-      semester: $semester
-      grade: $grade
-      credits: $credits
-      status: $status
-      note: $note
-      date: $date
+      grade: {
+        name: $name
+        semester: $semester
+        grade: $grade
+        credits: $credits
+        status: $status
+        note: $note
+        date: $date
+      }
     ) {
       grade
     }
@@ -38,7 +41,7 @@ const styles = {
   },
 };
 
-const NewGrade = props => {
+function NewGrade({navigation}) {
   const [name, setName] = useState('');
   const [semester, setSemester] = useState('');
   const [grade, setGrade] = useState('');
@@ -47,9 +50,12 @@ const NewGrade = props => {
   const [note, setNote] = useState('');
   const [date, setDate] = useState(new Date());
 
-  const [doSubmit, {loading}] = useMutation(CREATE_GRADE_MUTATION);
+  const [doSubmit, {loading}] = useMutation(CREATE_GRADE_MUTATION,{
+    refetchQueries: [{query: GRADES_QUERY}],
+    awaitRefetchQueries: true,
+  });
 
-  function onSubmit(){
+  function onSubmit() {
     doSubmit({
       variables: {
         name: name,
@@ -59,7 +65,12 @@ const NewGrade = props => {
         status: status ? 'Bestanden' : 'Nicht Bestanden',
         note: note,
         date: note,
-      }});
+      },
+    }).then(({data}) => {
+      if (data) {
+        navigation.navigate('Grades')
+      }
+    });
   }
 
   return (
@@ -67,14 +78,19 @@ const NewGrade = props => {
       <View style={styles.container}>
         <CustomTextInput
           title="Name"
-          value={semester}
-          onChangeText={setSemester}
+          value={name}
+          onChangeText={setName}
         />
         <CustomTextInput title="Grade" value={grade} onChangeText={setGrade} />
         <CustomTextInput
           title="Credits"
           value={credits}
           onChangeText={setCredits}
+        />
+        <CustomTextInput
+          title="semester"
+          value={semester}
+          onChangeText={setSemester}
         />
         <CustomSwitch title="Passed" value={status} onValueChange={setStatus} />
         <CustomDatePicker title="Date" date={date} onDateChanged={setDate} />

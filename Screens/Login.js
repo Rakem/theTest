@@ -4,6 +4,7 @@ import {Button, TextInput, Text} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import {clearData} from '../server/server';
 
 const LOGIN_MUTATION = gql`
   mutation doLogin($userName: String!, $password: String!) {
@@ -39,8 +40,8 @@ const Login = ({navigation}) => {
   return (
     <>
       {!!error && <Text>{error.message}</Text>}
-      <TextInput value={userName} onChangeText={setUserName}  autoCompleteType={'userName'}/>
-      <TextInput value={password} onChangeText={setPassword} autoCompleteType={'password'}/>
+      <TextInput value={userName} onChangeText={setUserName}/>
+      <TextInput value={password} onChangeText={setPassword} />
       <Button title={'Login'} onPress={onLoginPressed} />
     </>
   );
@@ -51,6 +52,7 @@ Login.isLoggedIn = async function() {
 };
 
 Login.logOut = async function() {
+  await clearData(); //just so we have a way to reset data
   return await AsyncStorage.removeItem(TOKEN_STORAGE_KEY);
 };
 

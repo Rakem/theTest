@@ -11,21 +11,9 @@ import {
   RefreshControl
 } from 'react-native';
 import GradeEntry from '../components/GradeEntry';
+import {GRADES_QUERY} from '../Queries';
 
-const GRADES_QUERY = gql`
-  query getGrades {
-    grades: getGrades {
-      id
-      name
-      semester
-      grade
-      credits
-      status
-      note
-      date
-    }
-  }
-`;
+
 
 const styles = {
   activityContainer:{
