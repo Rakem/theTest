@@ -8,29 +8,28 @@ import {
   TouchableOpacity,
   View,
   ActivityIndicator,
-  RefreshControl
+  RefreshControl,
 } from 'react-native';
 import GradeEntry from '../components/GradeEntry';
 import {GRADES_QUERY} from '../Queries';
 import {TEXT_COLOR} from '../Constants';
 import HeaderButton from '../components/HeaderButton';
 
-
-
 const styles = {
-  activityContainer:{
+  activityContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-}
+};
 
 const Grades = ({navigation}) => {
-  const {loading, error, data, refetch} = useQuery(GRADES_QUERY);
+  const {loading, error, data, refetch} = useQuery(GRADES_QUERY, {
+    notifyOnNetworkStatusChange: true,
+  });
   if (error) {
     return <Text>{error.message}</Text>;
   }
-
 
   function onCreateNewPressed() {
     navigation.navigate('NewGrade');
