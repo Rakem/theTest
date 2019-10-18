@@ -50,18 +50,19 @@ const Statistics = props => {
   const bins = grades.reduce(
     (bins, grade) => {
       if (grade.grade) {
-        const key = Math.round(convertFloat(grade.grade));
+        const key = Math.round(convertFloat(grade.grade)) - 1;
         bins[key] = bins[key] + 1;
       }
       return bins;
     },
-    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
   );
 
   const chartData = bins.map((value, index) => ({
     label: index + 1,
     value: value,
   }));
+
   return (
     <>
       <View style={styles.chartContainer}>
