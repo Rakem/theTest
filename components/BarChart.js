@@ -25,6 +25,7 @@ const styles = {
 };
 function BarChart({data}) {
   const [scale] = useState(new Animated.Value(0));
+  //should run every time the component shows, would need to register navigation events in parent component
   useEffect(() => {
     Animated.timing(scale, {
       delay: 50,

@@ -29,6 +29,5 @@ function SingleNumberVis(props) {
 SingleNumberVis.propTypes = {
   title: PropTypes.node,
   value: PropTypes.node,
-  style: PropTypes.object,
 };
 export default SingleNumberVis;

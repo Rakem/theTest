@@ -42,7 +42,7 @@ function createMockServerSchema() {
       }),
     },
     Mutation: {
-      //it may not be neccessarily the best idea to login via graphql, as usually it is assumed, that the user is already part of the context
+      //it may not be neccessarily the best idea to login via graphql, as usually this is done via another channel e.g. OAuth
       createToken: (_, {username, password}) => {
         if (username === 'user' && password === 'password') {
           return {token: 'I am a super secure token'}; //React native does not support built in node modules. most jwt libs depend on them
