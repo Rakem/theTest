@@ -2,7 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useQuery} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import {Text, FlatList, TouchableOpacity,View} from 'react-native';
+import {
+  Text,
+  FlatList,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+  RefreshControl
+} from 'react-native';
 import GradeEntry from '../components/GradeEntry';
 
 const GRADES_QUERY = gql`
@@ -20,24 +27,40 @@ const GRADES_QUERY = gql`
   }
 `;
 
+const styles = {
+  activityContainer:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}
+
 const Grades = ({navigation}) => {
-  const {loading, error, data} = useQuery(GRADES_QUERY);
-  if (error) return <Text>{error.message}</Text>;
-  if (loading) return <Text>loading</Text>;
+  const {loading, error, data, refetch} = useQuery(GRADES_QUERY);
+  if (error) {
+    return <Text>{error.message}</Text>;
+  }
+
 
   function onCreateNewPressed() {
     navigation.navigate('NewGrade');
   }
+
+  const grades = data ? data.grades : [];
+
   return (
     <>
       <FlatList
-        data={data.grades}
+        data={grades}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <TouchableOpacity onPress={() => navigation.navigate('GradeDetail',{grade:item})}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('GradeDetail', {grade: item})}>
             <GradeEntry grade={item} />
           </TouchableOpacity>
         )}
+        refreshing={loading}
+        onRefresh={() => refetch()}
       />
     </>
   );

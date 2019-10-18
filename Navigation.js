@@ -23,12 +23,9 @@ const headerLeftDefaultOptions = ({navigation}) => ({
 });
 const gradesStack = createStackNavigator(
   {
-    Statistics: {screen: Grades},
+    Statistics: {screen: Grades, navigationOptions: headerLeftDefaultOptions},
     NewGrade: {screen: NewGrade},
     GradeDetail: {screen: GradeDetail},
-  },
-  {
-    defaultNavigationOptions: headerLeftDefaultOptions,
   },
 );
 

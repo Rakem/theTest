@@ -11,13 +11,19 @@ function createMockServerSchema() {
   `;
   const executableSchema = makeExecutableSchema({typeDefs: schema});
 
+  function delay(resolver) {
+    return () => new Promise(resolve => setTimeout(resolve, 2000)).then(resolver);
+  }
+
   const resolverMap = {
     Query: {
-      getGrades: () => {
+      getGrades: delay(() => {
+        console.log('data fetched');
         return DATA.grades;
-      },
+      }),
     },
     Mutation: {
+      //it may not be neccessarily the best idea to login via graphql, as usually it is assumed, that the user is already part of the context
       createToken: (_, {username, password}) => {
         if (username === 'user' && password === 'password') {
           return {token: 'I am a super secure token'}; //React native does not support built in node modules. most jwt libs depend on them

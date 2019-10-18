@@ -38,12 +38,9 @@ const Login = ({navigation}) => {
 
   return (
     <>
-      {
-        !!error &&
-          <Text>{error.message}</Text>
-      }
-      <TextInput value={userName} onChangeText={setUserName} />
-      <TextInput value={password} onChangeText={setPassword} />
+      {!!error && <Text>{error.message}</Text>}
+      <TextInput value={userName} onChangeText={setUserName}  autoCompleteType={'userName'}/>
+      <TextInput value={password} onChangeText={setPassword} autoCompleteType={'password'}/>
       <Button title={'Login'} onPress={onLoginPressed} />
     </>
   );
