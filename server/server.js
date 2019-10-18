@@ -17,6 +17,15 @@ function createMockServerSchema() {
         return DATA.grades;
       },
     },
+    Mutation: {
+      createToken: (_, {username, password}) => {
+        if (username === 'user' && password === 'password') {
+          return {token: 'I am a super secure token'}; //React native does not support built in node modules. most jwt libs depend on them
+        } else {
+          throw new Error('Invalid Credentials');
+        }
+      },
+    },
   };
 
   addResolveFunctionsToSchema({

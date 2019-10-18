@@ -1,24 +1,55 @@
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Button, TextInput} from 'react-native';
-import {useQuery} from '@apollo/react-hooks';
+import AsyncStorage from '@react-native-community/async-storage';
+import {useMutation, useQuery} from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+
+const LOGIN_MUTATION = gql`
+  mutation doLogin($userName: String!, $password: String!) {
+    response: createToken(username: $userName, password: $password) {
+      token
+    }
+  }
+`;
+const TOKEN_STORAGE_KEY = '@TOKEN_STORAGE_KEY';
 
 const Login = ({navigation}) => {
-
-  function doLogin() {
-    navigation.navigate('App');
-  }
+  const [doLogin, {loading}] = useMutation(LOGIN_MUTATION);
 
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [storageError, setStorageError] = useState();
+
+  function onLoginPressed() {
+    setStorageError('');
+    doLogin({variables: {userName, password}})
+      .then(({data}) => {
+        return AsyncStorage.setItem(TOKEN_STORAGE_KEY, data.response.token);
+      })
+      .then(() => {
+        navigation.navigate('App');
+      })
+      .catch(error => {
+        setStorageError(error);
+      });
+  }
 
   return (
     <>
       <TextInput value={userName} onChangeText={setUserName} />
       <TextInput value={password} onChangeText={setPassword} />
-      <Button title={'Login'} onPress={doLogin} />
+      <Button title={'Login'} onPress={onLoginPressed} />
     </>
   );
+};
+
+Login.isLoggedIn = async function() {
+  return await AsyncStorage.getItem(TOKEN_STORAGE_KEY);
+};
+
+Login.logOut = async function() {
+  return await AsyncStorage.removeItem(TOKEN_STORAGE_KEY);
 };
 
 Login.propTypes = {};

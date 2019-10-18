@@ -12,6 +12,9 @@ type Grade {
     date: String
 }
 
+type LoginResponse {
+  token: String
+}
 
 input GradeInput{
     name: String
@@ -27,8 +30,10 @@ type Query {
     getGrades:[Grade]
 }
 
+
 type Mutation {
     createGrade(grade: GradeInput): Grade
+    createToken(username: String!, password: String!): LoginResponse
 }
 `;
 

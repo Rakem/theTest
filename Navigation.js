@@ -7,11 +7,14 @@ import Statistics from './Screens/Statistics';
 import Grades from './Screens/Grades';
 import NewGrade from './Screens/CustomGrade';
 import GradeDetail from './Screens/GradeDetail';
+import LoadingScreen from './Screens/LoadingScreen';
 import {Text, TouchableOpacity, View} from 'react-native';
 
 const headerLeftDefaultOptions = ({navigation}) => ({
   headerLeft: (
-    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+    <TouchableOpacity onPress={() =>
+      Login.logOut().then(() => navigation.navigate('Login'))
+    }>
       <View style={{paddingLeft: 15}}>
         <Text>Logout</Text>
       </View>
@@ -45,11 +48,12 @@ const tabNavigator = createBottomTabNavigator({
 
 const AuthNavigator = createSwitchNavigator(
   {
+    LoadingScreen: {screen: LoadingScreen},
     Login: {screen: Login},
     App: {screen: tabNavigator},
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'LoadingScreen',
   },
 );
 
